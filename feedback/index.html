@@ -8,7 +8,6 @@
     :root {
       --bg: #020617;
       --fg: #f9fafb;
-      --accent: #38bdf8;
       --max-width: 720px;
     }
 
@@ -32,64 +31,34 @@
       padding: 0 1.5rem 6rem;
     }
 
-    /* Sticky header */
-
-    header.sticky-header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(2, 6, 23, 0.9);
-      border-bottom: 1px solid rgba(148, 163, 184, 0.3);
-      color: var(--fg);
-      font-size: 0.75rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      opacity: 0;
-      transform: translateY(-100%);
-      transition: opacity 0.25s ease, transform 0.25s ease;
-      z-index: 10;
-      backdrop-filter: blur(12px);
-    }
-
-    header.sticky-header.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    header.sticky-header span.label {
-      opacity: 0.7;
-      transition: opacity 0.25s ease;
-    }
-
-    header.sticky-header.intro-active span.label {
-      opacity: 1;
-    }
-
-    /* Hero */
+    /* HERO */
 
     section.hero {
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 6rem 0 4rem;
-      position: relative;
+      padding: 4rem 0;
     }
 
     .hero-title {
-      font-size: clamp(3.5rem, 7vw, 5.5rem);
+      font-size: clamp(4rem, 10vw, 7rem); /* bigger title */
       font-weight: 600;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       text-align: center;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
+      opacity: 0;
+      transform: translateY(16px) scale(1.05);
       transform-origin: center center;
+      transition: opacity 0.7s ease-out, transform 0.7s ease-out;
       will-change: transform;
+    }
+
+    .hero-title.visible {
+      /* applied on page load */
+      opacity: 1;
+      transform: translateY(0) scale(1);
     }
 
     .hero-quote {
@@ -108,24 +77,27 @@
       transform: translateY(0);
     }
 
-    /* Intro section */
+    /* INTRO SECTION */
 
     section.intro {
-      padding: 6rem 0 3rem;
-    }
-
-    .intro-eyebrow {
-      font-size: 0.75rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: #9ca3af;
-      margin-bottom: 0.75rem;
+      min-height: 100vh; /* so it also feels like its own full screen */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4rem 0;
     }
 
     .intro-heading {
-      font-size: 2rem;
+      font-size: 2.2rem;
       font-weight: 600;
+      text-align: center;
       margin-bottom: 1.5rem;
+    }
+
+    .intro-body {
+      max-width: 40rem;
+      margin: 0 auto;
+      text-align: left;
     }
 
     .intro-body p + p {
@@ -134,10 +106,6 @@
   </style>
 </head>
 <body>
-  <header class="sticky-header">
-    <span class="label">Feedback</span>
-  </header>
-
   <main>
     <!-- HERO -->
     <section class="hero" id="hero">
@@ -150,7 +118,6 @@
 
     <!-- INTRO -->
     <section class="intro" id="intro">
-      <div class="intro-eyebrow">Feedback · Introduction</div>
       <h2 class="intro-heading">
         Understanding Feedback: The Architecture of Change
       </h2>
@@ -161,9 +128,9 @@
           systems.
         </p>
         <p>
-          Later we’ll add the 5 core ideas (negative feedback, positive
-          feedback, oscillations/delays, connectivity, leverage points) below
-          this section as interactive “buttons” with little diagrams.
+          As you continue scrolling, this section will eventually lead into the
+          five core ideas of feedback: negative feedback, positive feedback,
+          oscillations and delays, connectivity, and leverage points.
         </p>
       </div>
     </section>
@@ -173,50 +140,42 @@
     const hero = document.getElementById("hero");
     const heroTitle = document.getElementById("heroTitle");
     const heroQuote = document.getElementById("heroQuote");
-    const header = document.querySelector(".sticky-header");
-    const headerLabel = header.querySelector(".label");
-    const intro = document.getElementById("intro");
+
+    function onLoad() {
+      // Fade in the title on page load
+      heroTitle.classList.add("visible");
+      onScroll(); // initialize positions based on current scroll
+    }
 
     function onScroll() {
       const scrollY = window.scrollY || window.pageYOffset;
       const heroHeight = hero.offsetHeight || 1;
+
+      // Progress through the hero section: 0 at top, 1 at bottom of hero
       const progress = Math.min(Math.max(scrollY / heroHeight, 0), 1);
 
-      // Move + shrink title as you scroll
-      const translateY = -heroHeight * 0.25 * progress; // up to ~top third
-      const scale = 1 - 0.15 * progress; // shrink a bit
+      // 1) Title lifts up a little and shrinks slightly as you scroll
+      //    (but only while you're in the hero)
+      const maxLift = -40; // pixels upward at progress = 1
+      const translateY = maxLift * progress;
+      const scale = 1 - 0.05 * progress; // tiny shrink
+
       heroTitle.style.transform = `translateY(${translateY}px) scale(${scale})`;
 
-      // Show quote after a bit of scroll
-      if (progress > 0.2) {
+      // 2) Quote fades in once you've scrolled a bit into the hero
+      if (progress > 0.15) {
         heroQuote.classList.add("visible");
       } else {
         heroQuote.classList.remove("visible");
       }
 
-      // Show sticky header after leaving most of the hero
-      if (scrollY > heroHeight * 0.6) {
-        header.classList.add("visible");
-      } else {
-        header.classList.remove("visible");
-      }
-
-      // Change header label when intro section is "active"
-      const introRect = intro.getBoundingClientRect();
-      const viewportHeight =
-        window.innerHeight || document.documentElement.clientHeight;
-
-      if (introRect.top < viewportHeight * 0.5) {
-        header.classList.add("intro-active");
-        headerLabel.textContent = "Feedback: Introduction";
-      } else {
-        header.classList.remove("intro-active");
-        headerLabel.textContent = "Feedback";
-      }
+      // Note: we are NOT doing anything special when you reach the intro.
+      // The "title disappears" simply happens because the hero scrolls away,
+      // and you naturally arrive at the intro section, which centers its content.
     }
 
+    window.addEventListener("load", onLoad);
     window.addEventListener("scroll", onScroll);
-    window.addEventListener("load", onScroll);
     window.addEventListener("resize", onScroll);
   </script>
 </body>
