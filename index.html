@@ -2,16 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Feedback</title>
+  <title>Duncan's Little World</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    :root {
-      --bg: #020617;
-      --fg: #f9fafb;
-      --accent: #38bdf8;
-      --max-width: 720px;
-    }
-
     * {
       box-sizing: border-box;
       margin: 0;
@@ -19,205 +12,23 @@
     }
 
     body {
-      background: radial-gradient(circle at top, #0f172a 0, #020617 60%);
-      color: var(--fg);
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
-        "Segoe UI", sans-serif;
-      line-height: 1.6;
-    }
-
-    main {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 0 1.5rem 6rem;
-    }
-
-    /* Sticky header */
-
-    header.sticky-header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 56px;
+      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(2, 6, 23, 0.9);
-      border-bottom: 1px solid rgba(148, 163, 184, 0.3);
-      color: var(--fg);
-      font-size: 0.75rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      opacity: 0;
-      transform: translateY(-100%);
-      transition: opacity 0.25s ease, transform 0.25s ease;
-      z-index: 10;
-      backdrop-filter: blur(12px);
+      background-color: #024731; /* dark green */
+      color: #f9fafb;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
-    header.sticky-header.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    header.sticky-header span.label {
-      opacity: 0.7;
-      transition: opacity 0.25s ease;
-    }
-
-    header.sticky-header.intro-active span.label {
-      opacity: 1;
-    }
-
-    /* Hero */
-
-    section.hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 6rem 0 4rem;
-      position: relative;
-    }
-
-    .hero-title {
-      font-size: clamp(3.5rem, 7vw, 5.5rem);
+    h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
       font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
       text-align: center;
-      margin-bottom: 1.5rem;
-      transform-origin: center center;
-      will-change: transform;
-    }
-
-    .hero-quote {
-      max-width: 32rem;
-      margin: 0 auto;
-      text-align: center;
-      font-size: 1.05rem;
-      color: #e5e7eb;
-      opacity: 0;
-      transform: translateY(16px);
-      transition: opacity 0.4s ease, transform 0.4s ease;
-    }
-
-    .hero-quote.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Intro section */
-
-    section.intro {
-      padding: 6rem 0 3rem;
-    }
-
-    .intro-eyebrow {
-      font-size: 0.75rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: #9ca3af;
-      margin-bottom: 0.75rem;
-    }
-
-    .intro-heading {
-      font-size: 2rem;
-      font-weight: 600;
-      margin-bottom: 1.5rem;
-    }
-
-    .intro-body p + p {
-      margin-top: 1rem;
     }
   </style>
 </head>
 <body>
-  <header class="sticky-header">
-    <span class="label">Feedback</span>
-  </header>
-
-  <main>
-    <!-- HERO -->
-    <section class="hero" id="hero">
-      <h1 class="hero-title" id="heroTitle">Feedback</h1>
-      <p class="hero-quote" id="heroQuote">
-        “Understanding feedback is understanding how small actions become big
-        consequences.”
-      </p>
-    </section>
-
-    <!-- INTRO -->
-    <section class="intro" id="intro">
-      <div class="intro-eyebrow">Feedback · Introduction</div>
-      <h2 class="intro-heading">
-        Understanding Feedback: The Architecture of Change
-      </h2>
-      <div class="intro-body">
-        <p>
-          This is where your introduction copy goes – a short, intuitive
-          explanation of what feedback is and why it matters for changing
-          systems.
-        </p>
-        <p>
-          Later we’ll add the 5 core ideas (negative feedback, positive
-          feedback, oscillations/delays, connectivity, leverage points) below
-          this section as interactive “buttons” with little diagrams.
-        </p>
-      </div>
-    </section>
-  </main>
-
-  <script>
-    const hero = document.getElementById("hero");
-    const heroTitle = document.getElementById("heroTitle");
-    const heroQuote = document.getElementById("heroQuote");
-    const header = document.querySelector(".sticky-header");
-    const headerLabel = header.querySelector(".label");
-    const intro = document.getElementById("intro");
-
-    function onScroll() {
-      const scrollY = window.scrollY || window.pageYOffset;
-      const heroHeight = hero.offsetHeight || 1;
-      const progress = Math.min(Math.max(scrollY / heroHeight, 0), 1);
-
-      // Move + shrink title as you scroll
-      const translateY = -heroHeight * 0.25 * progress; // up to ~top third
-      const scale = 1 - 0.15 * progress; // shrink a bit
-      heroTitle.style.transform = `translateY(${translateY}px) scale(${scale})`;
-
-      // Show quote after a bit of scroll
-      if (progress > 0.2) {
-        heroQuote.classList.add("visible");
-      } else {
-        heroQuote.classList.remove("visible");
-      }
-
-      // Show sticky header after leaving most of the hero
-      if (scrollY > heroHeight * 0.6) {
-        header.classList.add("visible");
-      } else {
-        header.classList.remove("visible");
-      }
-
-      // Change header label when intro section is "active"
-      const introRect = intro.getBoundingClientRect();
-      const viewportHeight =
-        window.innerHeight || document.documentElement.clientHeight;
-
-      if (introRect.top < viewportHeight * 0.5) {
-        header.classList.add("intro-active");
-        headerLabel.textContent = "Feedback: Introduction";
-      } else {
-        header.classList.remove("intro-active");
-        headerLabel.textContent = "Feedback";
-      }
-    }
-
-    window.addEventListener("scroll", onScroll);
-    window.addEventListener("load", onScroll);
-    window.addEventListener("resize", onScroll);
-  </script>
+  <h1>Welcome to Duncan's Little World &lt;3</h1>
 </body>
 </html>
