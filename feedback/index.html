@@ -39,6 +39,18 @@
       flex-direction: column;
       justify-content: center;
       padding: 4rem 0;
+      position: relative;      /* so canvas can sit inside */
+      overflow: hidden;        /* hide nodes that go out of bounds */
+    }
+
+    /* Network canvas behind the text */
+    .hero-network {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: 0.45;           /* how bright the network is overall */
     }
 
     .hero-title {
@@ -53,6 +65,8 @@
       transform-origin: center center;
       transition: opacity 0.7s ease-out, transform 0.7s ease-out;
       will-change: transform;
+      position: relative;
+      z-index: 1; /* above the canvas */
     }
 
     .hero-title.visible {
@@ -70,6 +84,8 @@
       opacity: 0;
       transform: translateY(16px);
       transition: opacity 0.4s ease, transform 0.4s ease;
+      position: relative;
+      z-index: 1; /* above the canvas */
     }
 
     .hero-quote.visible {
@@ -80,7 +96,7 @@
     /* INTRO SECTION */
 
     section.intro {
-      min-height: 100vh; /* so it also feels like its own full screen */
+      min-height: 100vh; /* its own full "screen" */
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -109,11 +125,15 @@
   <main>
     <!-- HERO -->
     <section class="hero" id="hero">
+      <!-- network canvas -->
+      <canvas class="hero-network" id="heroNetwork"></canvas>
+
       <h1 class="hero-title" id="heroTitle">Feedback</h1>
       <p class="hero-quote" id="heroQuote">
-        "Systems of information feedback control are fundamental to all life and human endeavor, from 
-        the slow pace of biological evolution to the launching of the latest space satellite... Everything 
-        we do as individuals, as an industry, or as a society is done in the context of an 
+        "Systems of information feedback control are fundamental to all life 
+        and human endeavor, from the slow pace of biological evolution to the 
+        launching of the latest space satellite... Everything we do as individuals, 
+        as an industry, or as a society is done in the context of an 
         information-feedback system." — Jay W. Forrester
       </p>
     </section>
@@ -125,58 +145,56 @@
       </h2>
       <div class="intro-body">
         <p>
-          Every system that changes over time - from your morning coffee cooling 
-          down to global economies rising and falling - is fundamentally shaped by 
-          feedback. But feedback isn't just about responses; it's about how those 
-          responses circle back to influence what happens next, creating loops of 
-          cause and effect that define how our world behaves.
+          Every system that changes over time - from your morning coffee cooling down 
+          to global economies rising and falling - is fundamentally shaped by feedback. 
+          But feedback isn't just about responses; it's about how those responses circle 
+          back to influence what happens next, creating loops of cause and effect that 
+          define how our world behaves.
         </p>
         <p>
           To truly understand feedback, we need to recognize five fundamental patterns that 
-          appear again and againAs you continue scrolling, this section will eventually lead 
-          into the five core ideas of feedback: negative feedback, positive feedback,
-          oscillations and delays, connectivity, and leverage points.
+          appear again and again. As you continue scrolling, this section will eventually 
+          lead into the five core ideas of feedback.
         </p>
       </div>
     </section>
   </main>
 
+  <!-- network animation logic -->
+  <script src="hero-network.js"></script>
+
+  <!-- hero scroll + title fade logic -->
   <script>
     const hero = document.getElementById("hero");
     const heroTitle = document.getElementById("heroTitle");
     const heroQuote = document.getElementById("heroQuote");
 
-    function onLoad() {
-      // Fade in the title on page load
-      heroTitle.classList.add("visible");
-      onScroll(); // initialize positions based on current scroll
-    }
-
     function onScroll() {
       const scrollY = window.scrollY || window.pageYOffset;
       const heroHeight = hero.offsetHeight || 1;
 
-      // Progress through the hero section: 0 at top, 1 at bottom of hero
+      // 0 at top of hero, 1 at bottom of hero
       const progress = Math.min(Math.max(scrollY / heroHeight, 0), 1);
 
-      // 1) Title lifts up a little and shrinks slightly as you scroll
-      //    (but only while you're in the hero)
-      const maxLift = -40; // pixels upward at progress = 1
+      // title lifts slightly and shrinks a bit as you scroll through hero
+      const maxLift = -40; // px
       const translateY = maxLift * progress;
-      const scale = 1 - 0.05 * progress; // tiny shrink
+      const scale = 1 - 0.05 * progress;
 
       heroTitle.style.transform = `translateY(${translateY}px) scale(${scale})`;
 
-      // 2) Quote fades in once you've scrolled a bit into the hero
+      // quote appears once you're a bit into the hero
       if (progress > 0.15) {
         heroQuote.classList.add("visible");
       } else {
         heroQuote.classList.remove("visible");
       }
+    }
 
-      // Note: we are NOT doing anything special when you reach the intro.
-      // The "title disappears" simply happens because the hero scrolls away,
-      // and you naturally arrive at the intro section, which centers its content.
+    function onLoad() {
+      // fade-in title
+      heroTitle.classList.add("visible");
+      onScroll(); // initialize scroll-based positions
     }
 
     window.addEventListener("load", onLoad);
