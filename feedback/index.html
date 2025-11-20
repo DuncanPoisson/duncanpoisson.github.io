@@ -119,6 +119,131 @@
     .intro-body p + p {
       margin-top: 1rem;
     }
+
+    /* CORE IDEAS */
+
+    .core-ideas {
+      margin-top: 3rem;
+    }
+
+    .core-ideas-eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #9ca3af;
+      text-align: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .core-ideas-heading {
+      font-size: 1.2rem;
+      text-align: center;
+      color: #e5e7eb;
+      margin-bottom: 2rem;
+    }
+
+    .core-ideas-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+
+    .core-idea-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .core-idea-side {
+      display: flex;
+      justify-content: center;
+    }
+
+    .core-idea-pill {
+      position: relative;
+      width: 140px;
+      height: 140px;
+      border-radius: 9999px;
+      background: #f9fafb;
+      color: #020617;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.35);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      outline: none;
+    }
+
+    .core-idea-pill:hover,
+    .core-idea-pill:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 40px rgba(15, 23, 42, 0.5);
+    }
+
+    .core-idea-label {
+      pointer-events: none;
+    }
+
+    .core-idea-detail {
+      position: absolute;
+      left: 50%;
+      top: 100%;
+      transform: translate(-50%, 12px);
+      width: 240px;
+      max-width: 75vw;
+      background: rgba(15, 23, 42, 0.98);
+      color: #e5e7eb;
+      font-size: 0.85rem;
+      padding: 0.75rem 0.9rem;
+      border-radius: 0.75rem;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      z-index: 20;
+    }
+
+    .core-idea-pill:hover .core-idea-detail,
+    .core-idea-pill:focus-visible .core-idea-detail {
+      opacity: 1;
+      transform: translate(-50%, 4px);
+      pointer-events: auto;
+    }
+
+    .core-idea-animation {
+      min-height: 140px;
+      border-radius: 1rem;
+      border: 1px dashed rgba(148, 163, 184, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      font-size: 0.8rem;
+      color: #9ca3af;
+      text-align: center;
+    }
+
+    .core-idea-animation span {
+      max-width: 14rem;
+    }
+
+    /* Mobile stacking */
+
+    @media (max-width: 768px) {
+      .core-idea-row {
+        grid-template-columns: 1fr;
+      }
+
+      .core-idea-side {
+        justify-content: center;
+      }
+    }
   </style>
 </head>
 <body>
@@ -130,11 +255,8 @@
 
       <h1 class="hero-title" id="heroTitle">Feedback</h1>
       <p class="hero-quote" id="heroQuote">
-        "Systems of information feedback control are fundamental to all life 
-        and human endeavor, from the slow pace of biological evolution to the 
-        launching of the latest space satellite... Everything we do as individuals, 
-        as an industry, or as a society is done in the context of an 
-        information-feedback system." — Jay W. Forrester
+        “Understanding feedback is understanding how small actions become
+        big consequences.”
       </p>
     </section>
 
@@ -145,17 +267,121 @@
       </h2>
       <div class="intro-body">
         <p>
-          Every system that changes over time - from your morning coffee cooling down 
-          to global economies rising and falling - is fundamentally shaped by feedback. 
-          But feedback isn't just about responses; it's about how those responses circle 
-          back to influence what happens next, creating loops of cause and effect that 
-          define how our world behaves.
+          This is where your introduction copy goes – a short, intuitive
+          explanation of what feedback is and why it matters for changing
+          systems.
         </p>
         <p>
-          To truly understand feedback, we need to recognize five fundamental patterns that 
-          appear again and again. As you continue scrolling, this section will eventually 
-          lead into the five core ideas of feedback.
+          As you continue scrolling, this section will eventually lead into the
+          five core ideas of feedback: negative feedback, positive feedback,
+          oscillations and delays, connectivity, and leverage points.
         </p>
+
+        <!-- CORE IDEAS BLOCK -->
+        <div class="core-ideas" id="coreIdeas">
+          <div class="core-ideas-eyebrow">Five core ideas</div>
+          <div class="core-ideas-heading">
+            Hover over each circle to see how it shapes system behavior.
+          </div>
+
+          <div class="core-ideas-list">
+            <!-- Row 1: [button | animation] -->
+            <div class="core-idea-row">
+              <div class="core-idea-side">
+                <div class="core-idea-pill" tabindex="0" role="button">
+                  <span class="core-idea-label">Negative Feedback</span>
+                  <div class="core-idea-detail">
+                    Negative feedback pushes a system back toward a target when it
+                    drifts. Think of a thermostat turning the heat on and off to
+                    keep a room near a set temperature.
+                  </div>
+                </div>
+              </div>
+              <div class="core-idea-side">
+                <div class="core-idea-animation">
+                  <span>Animation: a line wandering up and down, settling into a band.</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 2: [animation | button] -->
+            <div class="core-idea-row">
+              <div class="core-idea-side">
+                <div class="core-idea-animation">
+                  <span>Animation: a curve that starts small and then explodes outward.</span>
+                </div>
+              </div>
+              <div class="core-idea-side">
+                <div class="core-idea-pill" tabindex="0" role="button">
+                  <span class="core-idea-label">Positive Feedback</span>
+                  <div class="core-idea-detail">
+                    Positive feedback amplifies change. Growth feeds on itself:
+                    rumors that spread faster as more people talk, or debt that
+                    snowballs under compound interest.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 3: [button | animation] -->
+            <div class="core-idea-row">
+              <div class="core-idea-side">
+                <div class="core-idea-pill" tabindex="0" role="button">
+                  <span class="core-idea-label">Oscillations &amp; Delays</span>
+                  <div class="core-idea-detail">
+                    When feedback arrives late, systems overcorrect. They overshoot,
+                    then swing back, creating cycles – like traffic waves, business
+                    booms and busts, or overshooting a shower temperature.
+                  </div>
+                </div>
+              </div>
+              <div class="core-idea-side">
+                <div class="core-idea-animation">
+                  <span>Animation: a signal that overshoots and oscillates before calming down.</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 4: [animation | button] -->
+            <div class="core-idea-row">
+              <div class="core-idea-side">
+                <div class="core-idea-animation">
+                  <span>Animation: a network where a perturbation ripples through many nodes.</span>
+                </div>
+              </div>
+              <div class="core-idea-side">
+                <div class="core-idea-pill" tabindex="0" role="button">
+                  <span class="core-idea-label">Connectivity</span>
+                  <div class="core-idea-detail">
+                    Connectivity is how tightly the parts of a system are linked.
+                    More connections can spread help or harm quickly – enabling
+                    resilience, but also making cascading failures more likely.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 5: [button | animation] -->
+            <div class="core-idea-row">
+              <div class="core-idea-side">
+                <div class="core-idea-pill" tabindex="0" role="button">
+                  <span class="core-idea-label">Leverage Points</span>
+                  <div class="core-idea-detail">
+                    Leverage points are places where a small change shifts overall
+                    behavior – changing the rules, goals, or information flows of a
+                    system rather than just turning a knob a little harder.
+                  </div>
+                </div>
+              </div>
+              <div class="core-idea-side">
+                <div class="core-idea-animation">
+                  <span>Animation: a tiny nudge at one node changing the whole pattern.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- END CORE IDEAS -->
       </div>
     </section>
   </main>
