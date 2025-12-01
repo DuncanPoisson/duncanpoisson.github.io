@@ -10,6 +10,11 @@
   const NUM_NODES = 8;
   const ANIM_DURATION = 10000; // 10 seconds in ms
 
+  // Max opacity per layer (outer → inner)
+  const LAYER1_MAX_ALPHA = 0.9;  // edge layer: brightest
+  const LAYER2_MAX_ALPHA = 0.6;  // middle layer: softer
+  const LAYER3_MAX_ALPHA = 0.35; // inner layer: faintest
+
   let leftLayers, rightLayers;
   let lines12 = [];
   let lines23 = [];
@@ -119,21 +124,38 @@
     ctx.restore();
   }
 
-  function drawLines(lines, progress, alpha) {
-    if (progress <= 0 || alpha <= 0) return;
+  // Draw lines with a gradient along their length:
+  //   near "from" → fromAlpha
+  //   near "to"   → toAlpha
+  function drawLines(lines, progress, fromAlpha, toAlpha) {
+    if (progress <= 0 || fromAlpha <= 0 && toAlpha <= 0) return;
+
     ctx.save();
-    ctx.strokeStyle = "#e5e7eb";
     ctx.lineWidth = 1.2;
-    ctx.globalAlpha = alpha;
+
     lines.forEach((seg) => {
       const { from, to } = seg;
+
       const x = from.x + (to.x - from.x) * progress;
       const y = from.y + (to.y - from.y) * progress;
+
+      const grad = ctx.createLinearGradient(from.x, from.y, x, y);
+      grad.addColorStop(
+        0,
+        `rgba(229, 231, 235, ${fromAlpha})` // near outer layer
+      );
+      grad.addColorStop(
+        1,
+        `rgba(229, 231, 235, ${toAlpha})`   // near inner layer
+      );
+
+      ctx.strokeStyle = grad;
       ctx.beginPath();
       ctx.moveTo(from.x, from.y);
       ctx.lineTo(x, y);
       ctx.stroke();
     });
+
     ctx.restore();
   }
 
@@ -148,16 +170,18 @@
     const stage5End = 1.0; // lines 2→3 draw
 
     // Layer 1 dots (0 → 0.2)
-    const alpha1 = clamp(t / stage1End, 0, 1);
+    const fade1 = clamp(t / stage1End, 0, 1);
+    const alpha1 = fade1 * LAYER1_MAX_ALPHA;
     drawDots(leftLayers.l1, alpha1);
     drawDots(rightLayers.l1, alpha1);
 
     // Layer 2 dots (0.2 → 0.4)
-    const alpha2 = clamp(
+    const fade2 = clamp(
       (t - stage1End) / (stage2End - stage1End),
       0,
       1
     );
+    const alpha2 = fade2 * LAYER2_MAX_ALPHA;
     drawDots(leftLayers.l2, alpha2);
     drawDots(rightLayers.l2, alpha2);
 
@@ -167,14 +191,16 @@
       0,
       1
     );
-    drawLines(lines12, line12Prog, 0.9);
+    // Gradient from layer1 alpha → layer2 alpha
+    drawLines(lines12, line12Prog, LAYER1_MAX_ALPHA, LAYER2_MAX_ALPHA);
 
     // Layer 3 dots (0.7 → 0.8)
-    const alpha3 = clamp(
+    const fade3 = clamp(
       (t - stage3End) / (stage4End - stage3End),
       0,
       1
     );
+    const alpha3 = fade3 * LAYER3_MAX_ALPHA;
     drawDots(leftLayers.l3, alpha3);
     drawDots(rightLayers.l3, alpha3);
 
@@ -184,7 +210,8 @@
       0,
       1
     );
-    drawLines(lines23, line23Prog, 0.9);
+    // Gradient from layer2 alpha → layer3 alpha
+    drawLines(lines23, line23Prog, LAYER2_MAX_ALPHA, LAYER3_MAX_ALPHA);
   }
 
   function animate(now) {
