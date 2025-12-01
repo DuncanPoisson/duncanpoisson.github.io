@@ -370,6 +370,28 @@
       margin-top: 1rem;
     }
 
+    /* Stepper text */
+
+    .system-steps {
+      position: relative;
+    }
+
+    .system-step {
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      opacity: 0.25;
+      transition: opacity 0.4s ease;
+    }
+
+    .system-step p {
+      margin: 0;
+    }
+
+    .system-step.active {
+      opacity: 1;
+    }
+
     .system-viz {
       min-height: 160px;
       border-radius: 1rem;
@@ -439,6 +461,14 @@
       color: #020617;
       transform: translateY(-1px);
       box-shadow: 0 10px 25px rgba(15, 23, 42, 0.45);
+    }
+
+    /* Sticky viz on larger screens */
+    @media (min-width: 769px) {
+      .system-viz {
+        position: sticky;
+        top: 20vh;
+      }
     }
 
     /* Mobile stacking */
@@ -678,20 +708,23 @@
           <!-- Negative feedback subsection -->
           <div class="system-subsection" data-observe>
             <div class="system-subsection-grid">
-              <div class="system-text">
-                <h4>Negative feedback: holding the room steady</h4>
-                <p>
-                  Imagine a room set to 20°C. As the room cools below that target, the thermostat
-                  turns the heater on; as it warms above the target, the heater turns off. The
-                  system is constantly measuring the gap between desired and actual temperature,
-                  and pushing back against any drift.
-                </p>
-                <p>
-                  This is a pure example of a balancing loop: any deviation creates a response
-                  that pushes in the opposite direction. If the heater is sized reasonably and
-                  the thermostat is tuned well, the room hovers in a comfortable band around
-                  the set point instead of drifting off to freezing or boiling.
-                </p>
+              <div class="system-text system-steps" data-step-container>
+                <div class="system-step">
+                  <p>
+                    Imagine a room set to 20°C. As the room cools below that target, the thermostat
+                    turns the heater on; as it warms above the target, the heater turns off. The
+                    system is constantly measuring the gap between desired and actual temperature,
+                    and pushing back against any drift.
+                  </p>
+                </div>
+                <div class="system-step">
+                  <p>
+                    This is a pure example of a balancing loop: any deviation creates a response
+                    that pushes in the opposite direction. If the heater is sized reasonably and
+                    the thermostat is tuned well, the room hovers in a comfortable band around
+                    the set point instead of drifting off to freezing or boiling.
+                  </p>
+                </div>
               </div>
               <div class="system-viz">
                 <span>
@@ -706,21 +739,24 @@
           <!-- Oscillations & delays subsection -->
           <div class="system-subsection reverse" data-observe>
             <div class="system-subsection-grid">
-              <div class="system-text">
-                <h4>Oscillations &amp; delays: when “just right” overshoots</h4>
-                <p>
-                  Real thermostats aren’t instant. The sensor lags behind the true air temperature,
-                  the heater takes time to warm the room, and the thermostat usually waits for a
-                  noticeable change before flipping states. These delays mean the system is always
-                  reacting to slightly out-of-date information.
-                </p>
-                <p>
-                  The result is a gentle oscillation: the room gets a bit too warm before the heater
-                  cuts off, then cools a bit too much before it comes back on. If the delay is long
-                  or the heater is too powerful, the swings get larger and more noticeable. The same
-                  structure shows up in many systems – from inventory management to traffic control –
-                  wherever feedback arrives late.
-                </p>
+              <div class="system-text system-steps" data-step-container>
+                <div class="system-step">
+                  <p>
+                    Real thermostats aren’t instant. The sensor lags behind the true air temperature,
+                    the heater takes time to warm the room, and the thermostat usually waits for a
+                    noticeable change before flipping states. These delays mean the system is always
+                    reacting to slightly out-of-date information.
+                  </p>
+                </div>
+                <div class="system-step">
+                  <p>
+                    The result is a gentle oscillation: the room gets a bit too warm before the heater
+                    cuts off, then cools a bit too much before it comes back on. If the delay is long
+                    or the heater is too powerful, the swings get larger and more noticeable. The same
+                    structure shows up in many systems – from inventory management to traffic control –
+                    wherever feedback arrives late.
+                  </p>
+                </div>
               </div>
               <div class="system-viz">
                 <span>
