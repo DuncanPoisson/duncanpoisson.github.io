@@ -188,11 +188,10 @@
       pointer-events: none;
     }
 
+    /* Shared popover styling */
+
     .core-idea-detail {
       position: absolute;
-      left: 50%;
-      top: 100%;
-      transform: translate(-50%, 12px);
       width: 240px;
       max-width: 75vw;
       background: rgba(15, 23, 42, 0.98);
@@ -207,10 +206,31 @@
       z-index: 20;
     }
 
-    .core-idea-pill:hover .core-idea-detail,
-    .core-idea-pill:focus-visible .core-idea-detail {
+    /* Pills where the text should extend to the RIGHT (over the animation) */
+    .core-idea-pill.pill-right .core-idea-detail {
+      left: 100%;
+      top: 50%;
+      transform: translate(12px, -50%);
+    }
+
+    .core-idea-pill.pill-right:hover .core-idea-detail,
+    .core-idea-pill.pill-right:focus-visible .core-idea-detail {
       opacity: 1;
-      transform: translate(-50%, 4px);
+      transform: translate(4px, -50%);
+      pointer-events: auto;
+    }
+
+    /* Pills where the text should extend to the LEFT (over the animation) */
+    .core-idea-pill.pill-left .core-idea-detail {
+      right: 100%;
+      top: 50%;
+      transform: translate(-12px, -50%);
+    }
+
+    .core-idea-pill.pill-left:hover .core-idea-detail,
+    .core-idea-pill.pill-left:focus-visible .core-idea-detail {
+      opacity: 1;
+      transform: translate(-4px, -50%);
       pointer-events: auto;
     }
 
@@ -244,6 +264,24 @@
 
       .core-idea-side {
         justify-content: center;
+      }
+
+      /* On small screens, fall back to below-the-pill behavior
+         so the popover doesn't fly off-screen. */
+      .core-idea-pill.pill-right .core-idea-detail,
+      .core-idea-pill.pill-left .core-idea-detail {
+        left: 50%;
+        right: auto;
+        top: 100%;
+        transform: translate(-50%, 12px);
+      }
+
+      .core-idea-pill.pill-right:hover .core-idea-detail,
+      .core-idea-pill.pill-right:focus-visible .core-idea-detail,
+      .core-idea-pill.pill-left:hover .core-idea-detail,
+      .core-idea-pill.pill-left:focus-visible .core-idea-detail {
+        opacity: 1;
+        transform: translate(-50%, 4px);
       }
     }
   </style>
@@ -290,7 +328,7 @@
             <!-- Row 1: [button | animation] -->
             <div class="core-idea-row">
               <div class="core-idea-side">
-                <div class="core-idea-pill" tabindex="0" role="button">
+                <div class="core-idea-pill pill-right" tabindex="0" role="button">
                   <span class="core-idea-label">Negative Feedback</span>
                   <div class="core-idea-detail">
                     Negative feedback pushes a system back toward a target when it
@@ -314,7 +352,7 @@
                 </div>
               </div>
               <div class="core-idea-side">
-                <div class="core-idea-pill" tabindex="0" role="button">
+                <div class="core-idea-pill pill-left" tabindex="0" role="button">
                   <span class="core-idea-label">Positive Feedback</span>
                   <div class="core-idea-detail">
                     Positive feedback amplifies change. Growth feeds on itself:
@@ -328,7 +366,7 @@
             <!-- Row 3: [button | animation] -->
             <div class="core-idea-row">
               <div class="core-idea-side">
-                <div class="core-idea-pill" tabindex="0" role="button">
+                <div class="core-idea-pill pill-right" tabindex="0" role="button">
                   <span class="core-idea-label">Oscillations &amp; Delays</span>
                   <div class="core-idea-detail">
                     When feedback arrives late, systems overcorrect. They overshoot,
@@ -352,7 +390,7 @@
                 </div>
               </div>
               <div class="core-idea-side">
-                <div class="core-idea-pill" tabindex="0" role="button">
+                <div class="core-idea-pill pill-left" tabindex="0" role="button">
                   <span class="core-idea-label">Connectivity</span>
                   <div class="core-idea-detail">
                     Connectivity is how tightly the parts of a system are linked.
@@ -366,7 +404,7 @@
             <!-- Row 5: [button | animation] -->
             <div class="core-idea-row">
               <div class="core-idea-side">
-                <div class="core-idea-pill" tabindex="0" role="button">
+                <div class="core-idea-pill pill-right" tabindex="0" role="button">
                   <span class="core-idea-label">Leverage Points</span>
                   <div class="core-idea-detail">
                     Leverage points are places where a small change shifts overall
