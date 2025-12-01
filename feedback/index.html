@@ -192,8 +192,8 @@
 
     .core-idea-detail {
       position: absolute;
-      width: 240px;
-      max-width: 75vw;
+      width: 340px;           /* wider so it fully covers the animation column */
+      max-width: 80vw;
       background: rgba(15, 23, 42, 0.98);
       color: #e5e7eb;
       font-size: 0.85rem;
@@ -206,11 +206,13 @@
       z-index: 20;
     }
 
-    /* Pills where the text should extend to the RIGHT (over the animation) */
+    /* Pills where the text should extend to the RIGHT (over the animation)
+       These are the LEFT-column pills: text should be LEFT-aligned. */
     .core-idea-pill.pill-right .core-idea-detail {
       left: 100%;
       top: 50%;
       transform: translate(12px, -50%);
+      text-align: left;
     }
 
     .core-idea-pill.pill-right:hover .core-idea-detail,
@@ -220,11 +222,13 @@
       pointer-events: auto;
     }
 
-    /* Pills where the text should extend to the LEFT (over the animation) */
+    /* Pills where the text should extend to the LEFT (over the animation)
+       These are the RIGHT-column pills: text should be RIGHT-aligned. */
     .core-idea-pill.pill-left .core-idea-detail {
       right: 100%;
       top: 50%;
       transform: translate(-12px, -50%);
+      text-align: right;
     }
 
     .core-idea-pill.pill-left:hover .core-idea-detail,
@@ -274,6 +278,7 @@
         right: auto;
         top: 100%;
         transform: translate(-50%, 12px);
+        text-align: left;     /* normalize on mobile for readability */
       }
 
       .core-idea-pill.pill-right:hover .core-idea-detail,
