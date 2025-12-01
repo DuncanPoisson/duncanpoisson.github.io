@@ -26,7 +26,6 @@
       const target = btn.dataset.systemTab;
       activateSystem(target);
 
-      // Scroll to the top of the systems body for a smooth transition
       const body = systemsSection.querySelector(".systems-body");
       if (body) {
         body.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -42,7 +41,7 @@
     });
   });
 
-  // Optional: fade-in subsections as they enter viewport
+  // Fade-in subsections as they enter viewport
   const observeTargets = systemsSection.querySelectorAll("[data-observe]");
 
   if ("IntersectionObserver" in window) {
@@ -64,7 +63,44 @@
     observeTargets.forEach((el) => el.classList.add("visible"));
   }
 
-  // You can choose to start with a system open or none.
-  // Uncomment this if you want Thermostats open by default:
+  // Scroll-driven "stepper" text (R2D3 style)
+  const stepContainers = systemsSection.querySelectorAll("[data-step-container]");
+
+  if ("IntersectionObserver" in window) {
+    stepContainers.forEach((container) => {
+      const steps = Array.from(container.querySelectorAll(".system-step"));
+      if (steps.length === 0) return;
+
+      // Make the first step active initially
+      steps[0].classList.add("active");
+
+      const ioSteps = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              steps.forEach((s) => s.classList.remove("active"));
+              entry.target.classList.add("active");
+            }
+          });
+        },
+        {
+          root: null,
+          rootMargin: "-40% 0px -40% 0px", // favor the middle of the viewport
+          threshold: 0.3,
+        }
+      );
+
+      steps.forEach((step) => ioSteps.observe(step));
+    });
+  } else {
+    // Fallback: show all steps fully
+    stepContainers.forEach((container) => {
+      container.querySelectorAll(".system-step").forEach((step) => {
+        step.classList.add("active");
+      });
+    });
+  }
+
+  // Optionally start with a system pre-open:
   // activateSystem("thermostat");
 })();
