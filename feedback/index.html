@@ -192,7 +192,7 @@
 
     .core-idea-detail {
       position: absolute;
-      width: 400px;      
+      width: 400px;
       max-width: 80vw;
       background: rgba(15, 23, 42, 0.98);
       color: #e5e7eb;
@@ -255,6 +255,192 @@
       max-width: 14rem;
     }
 
+    /* SYSTEMS SECTION */
+
+    section.systems {
+      padding: 4rem 0 0;
+      border-top: 1px solid rgba(148, 163, 184, 0.25);
+      margin-top: 4rem;
+    }
+
+    .systems-intro {
+      max-width: 40rem;
+      margin: 0 auto 2.5rem;
+      font-size: 1rem;
+      color: #e5e7eb;
+      text-align: left;
+    }
+
+    .system-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .system-tab {
+      width: 150px;
+      height: 150px;
+      border-radius: 9999px;
+      background: #f9fafb;
+      color: #020617;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.35);
+      transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        background 0.18s ease,
+        color 0.18s ease,
+        border-color 0.18s ease;
+      border: 1px solid transparent;
+    }
+
+    .system-tab:hover,
+    .system-tab:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 40px rgba(15, 23, 42, 0.5);
+    }
+
+    .system-tab.active {
+      background: #020617;
+      color: #f9fafb;
+      border-color: rgba(148, 163, 184, 0.5);
+    }
+
+    .systems-body {
+      margin-top: 1rem;
+    }
+
+    .system-detail {
+      display: none;
+      margin-bottom: 4rem;
+    }
+
+    .system-detail-heading {
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+      text-align: left;
+    }
+
+    .system-detail-lede {
+      margin-bottom: 2rem;
+      color: #e5e7eb;
+    }
+
+    .system-subsection {
+      margin-bottom: 3rem;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .system-subsection.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .system-subsection-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 2rem;
+      align-items: flex-start;
+    }
+
+    .system-subsection.reverse .system-subsection-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+    }
+
+    .system-subsection.reverse .system-text {
+      order: 2;
+    }
+
+    .system-subsection.reverse .system-viz {
+      order: 1;
+    }
+
+    .system-text p + p {
+      margin-top: 1rem;
+    }
+
+    .system-viz {
+      min-height: 160px;
+      border-radius: 1rem;
+      border: 1px dashed rgba(148, 163, 184, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      font-size: 0.85rem;
+      color: #9ca3af;
+      text-align: center;
+    }
+
+    .system-bottom {
+      text-align: center;
+      margin-top: 1.5rem;
+    }
+
+    .system-bottom-intro {
+      font-size: 0.95rem;
+      color: #e5e7eb;
+      margin-bottom: 1.25rem;
+    }
+
+    .system-bottom-pills {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .system-bottom-pill {
+      border-radius: 9999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      padding: 0.4rem 0.9rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #e5e7eb;
+      background: rgba(15, 23, 42, 0.85);
+    }
+
+    .back-to-systems {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.6rem 1.4rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      background: transparent;
+      color: #e5e7eb;
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition:
+        background 0.18s ease,
+        color 0.18s ease,
+        transform 0.18s ease,
+        box-shadow 0.18s ease;
+    }
+
+    .back-to-systems:hover,
+    .back-to-systems:focus-visible {
+      background: #e5e7eb;
+      color: #020617;
+      transform: translateY(-1px);
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.45);
+    }
+
     /* Mobile stacking */
 
     @media (max-width: 768px) {
@@ -288,6 +474,24 @@
         opacity: 1;
         transform: translate(-50%, 4px);
       }
+
+      .system-subsection-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .system-subsection.reverse .system-text,
+      .system-subsection.reverse .system-viz {
+        order: unset;
+      }
+
+      .systems-intro {
+        text-align: left;
+      }
+
+      .system-tab {
+        width: 130px;
+        height: 130px;
+      }
     }
   </style>
 </head>
@@ -300,10 +504,10 @@
     <section class="hero" id="hero">
       <h1 class="hero-title" id="heroTitle">Feedback</h1>
       <p class="hero-quote" id="heroQuote">
-        "Systems of information feedback control are fundamental to all 
-        life and human endeavor, from the slow pace of biological evolution 
-        to the launching of the latest space satellite... Everything we do 
-        as individuals, as an industry, or as a society is done in the context 
+        "Systems of information feedback control are fundamental to all
+        life and human endeavor, from the slow pace of biological evolution
+        to the launching of the latest space satellite... Everything we do
+        as individuals, as an industry, or as a society is done in the context
         of an information-feedback system." — Jay W. Forrester
       </p>
     </section>
@@ -315,12 +519,11 @@
       </h2>
       <div class="intro-body">
         <p>
-          Every system that changes over time - from your morning coffee cooling 
-          down to global economies rising and falling - is fundamentally shaped by 
-          feedback. But feedback isn't just about responses; it's about how those 
-          responses circle back to influence what happens next, creating loops of 
+          Every system that changes over time - from your morning coffee cooling
+          down to global economies rising and falling - is fundamentally shaped by
+          feedback. But feedback isn't just about responses; it's about how those
+          responses circle back to influence what happens next, creating loops of
           cause and effect that define how our world behaves.
-
         </p>
         <p>
           As you continue scrolling, this section will eventually lead into the
@@ -341,11 +544,10 @@
                 <div class="core-idea-pill pill-right" tabindex="0" role="button">
                   <span class="core-idea-label">Negative Feedback</span>
                   <div class="core-idea-detail">
-                    Negative feedback acts like an invisible hand that pulls systems toward stability. 
-                    Think of how your body maintains its temperature — too hot, and you sweat to cool down; too 
-                    cold, and you shiver to warm up. These balancing loops don't amplify change; 
+                    Negative feedback acts like an invisible hand that pulls systems toward stability.
+                    Think of how your body maintains its temperature — too hot, and you sweat to cool down; too
+                    cold, and you shiver to warm up. These balancing loops don't amplify change;
                     they resist it, always tugging things back toward some target.
-
                   </div>
                 </div>
               </div>
@@ -367,12 +569,11 @@
                 <div class="core-idea-pill pill-left" tabindex="0" role="button">
                   <span class="core-idea-label">Positive Feedback</span>
                   <div class="core-idea-detail">
-                    Positive feedback does the opposite - it changes by feeding on itself. A snowball rolling 
-                    downhill gathers more snow, becoming larger, gathering even more snow. 
-                    These amplifying loops take small changes and make them bigger, whether 
-                    that's a viral video spreading across social media or economic bubbles 
+                    Positive feedback does the opposite - it changes by feeding on itself. A snowball rolling
+                    downhill gathers more snow, becoming larger, gathering even more snow.
+                    These amplifying loops take small changes and make them bigger, whether
+                    that's a viral video spreading across social media or economic bubbles
                     inflating before they burst.
-
                   </div>
                 </div>
               </div>
@@ -384,11 +585,10 @@
                 <div class="core-idea-pill pill-right" tabindex="0" role="button">
                   <span class="core-idea-label">Oscillations &amp; Delays</span>
                   <div class="core-idea-detail">
-                    Oscillations and delays emerge because feedback isn't instantaneous. When you adjust 
-                    a shower's temperature, there's a moment before you feel the change - and in that gap, 
-                    you might overcorrect. These time lags transform simple feedback into waves and cycles, 
+                    Oscillations and delays emerge because feedback isn't instantaneous. When you adjust
+                    a shower's temperature, there's a moment before you feel the change - and in that gap,
+                    you might overcorrect. These time lags transform simple feedback into waves and cycles,
                     from predator-prey population swings to boom-bust economic patterns.
-
                   </div>
                 </div>
               </div>
@@ -410,11 +610,10 @@
                 <div class="core-idea-pill pill-left" tabindex="0" role="button">
                   <span class="core-idea-label">Connectivity</span>
                   <div class="core-idea-detail">
-                    Connectivity determines how feedback ripples through a system. A single delayed 
-                    flight at a major hub can cascade through an airline's entire network. The more 
-                    connected a system, the faster and farther feedback effects can travel, turning 
+                    Connectivity determines how feedback ripples through a system. A single delayed
+                    flight at a major hub can cascade through an airline's entire network. The more
+                    connected a system, the faster and farther feedback effects can travel, turning
                     local changes into system-wide transformations.
-
                   </div>
                 </div>
               </div>
@@ -426,11 +625,10 @@
                 <div class="core-idea-pill pill-right" tabindex="0" role="button">
                   <span class="core-idea-label">Leverage Points</span>
                   <div class="core-idea-detail">
-                    Leverage points are where you can actually reshape these feedback patterns. 
-                    Some changes just push on a system, but others alter the very structure of its 
-                    loops - like how changing interest rates doesn't just affect one loan, but transforms 
+                    Leverage points are where you can actually reshape these feedback patterns.
+                    Some changes just push on a system, but others alter the very structure of its
+                    loops - like how changing interest rates doesn't just affect one loan, but transforms
                     the entire feedback dynamic between borrowing, spending, and economic growth.
-
                   </div>
                 </div>
               </div>
@@ -445,10 +643,141 @@
         <!-- END CORE IDEAS -->
       </div>
     </section>
+
+    <!-- SYSTEMS SECTION -->
+    <section class="systems" id="systems">
+      <p class="systems-intro">
+        Together, these five ideas form a lens for seeing the invisible dynamics that shape
+        everything from ecosystems to organizations to our own behaviors. Once you understand
+        them, you start to see why systems behave the way they do. Below, we’ll look at three
+        example systems that make these ideas concrete.
+      </p>
+
+      <div class="system-tabs">
+        <button class="system-tab" type="button" data-system-tab="thermostat" aria-pressed="false">
+          System 1:<br />Thermostats
+        </button>
+        <button class="system-tab" type="button" data-system-tab="wildfire" aria-pressed="false">
+          System 2:<br />Wildfires
+        </button>
+        <button class="system-tab" type="button" data-system-tab="commons" aria-pressed="false">
+          System 3:<br />Ostrom Commons
+        </button>
+      </div>
+
+      <div class="systems-body">
+        <!-- Thermostat detail -->
+        <div class="system-detail" data-system-detail="thermostat" aria-hidden="true">
+          <h3 class="system-detail-heading">System 1: Thermostats</h3>
+          <p class="system-detail-lede">
+            A thermostat is one of the simplest places to see feedback in action. It’s a tiny
+            machine that constantly compares what <em>is</em> (the current temperature) with what
+            <em>should be</em> (the set point), and reacts accordingly.
+          </p>
+
+          <!-- Negative feedback subsection -->
+          <div class="system-subsection" data-observe>
+            <div class="system-subsection-grid">
+              <div class="system-text">
+                <h4>Negative feedback: holding the room steady</h4>
+                <p>
+                  Imagine a room set to 20°C. As the room cools below that target, the thermostat
+                  turns the heater on; as it warms above the target, the heater turns off. The
+                  system is constantly measuring the gap between desired and actual temperature,
+                  and pushing back against any drift.
+                </p>
+                <p>
+                  This is a pure example of a balancing loop: any deviation creates a response
+                  that pushes in the opposite direction. If the heater is sized reasonably and
+                  the thermostat is tuned well, the room hovers in a comfortable band around
+                  the set point instead of drifting off to freezing or boiling.
+                </p>
+              </div>
+              <div class="system-viz">
+                <span>
+                  Static placeholder:<br />
+                  A plot of temperature over time gently approaching and then wobbling around a
+                  target band as the heater switches on and off.
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Oscillations & delays subsection -->
+          <div class="system-subsection reverse" data-observe>
+            <div class="system-subsection-grid">
+              <div class="system-text">
+                <h4>Oscillations &amp; delays: when “just right” overshoots</h4>
+                <p>
+                  Real thermostats aren’t instant. The sensor lags behind the true air temperature,
+                  the heater takes time to warm the room, and the thermostat usually waits for a
+                  noticeable change before flipping states. These delays mean the system is always
+                  reacting to slightly out-of-date information.
+                </p>
+                <p>
+                  The result is a gentle oscillation: the room gets a bit too warm before the heater
+                  cuts off, then cools a bit too much before it comes back on. If the delay is long
+                  or the heater is too powerful, the swings get larger and more noticeable. The same
+                  structure shows up in many systems – from inventory management to traffic control –
+                  wherever feedback arrives late.
+                </p>
+              </div>
+              <div class="system-viz">
+                <span>
+                  Static placeholder:<br />
+                  A plot that overshoots the set point and falls back, showing a mild thermal “wave”
+                  caused by the delay between sensing and heating.
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Other core ideas in this system -->
+          <div class="system-subsection" data-observe>
+            <div class="system-bottom">
+              <p class="system-bottom-intro">
+                How the other core ideas appear in this system:
+              </p>
+              <div class="system-bottom-pills">
+                <span class="system-bottom-pill">Positive feedback</span>
+                <span class="system-bottom-pill">Connectivity</span>
+                <span class="system-bottom-pill">Leverage points</span>
+              </div>
+              <button
+                class="back-to-systems"
+                type="button"
+                data-back-to-systems="true"
+              >
+                Back to systems
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Wildfire & Commons placeholders (we’ll fill later) -->
+        <div class="system-detail" data-system-detail="wildfire" aria-hidden="true">
+          <h3 class="system-detail-heading">System 2: Wildfires</h3>
+          <p class="system-detail-lede">
+            This section will explore how positive feedback and connectivity interact in fire
+            regimes. (Content coming soon.)
+          </p>
+        </div>
+
+        <div class="system-detail" data-system-detail="commons" aria-hidden="true">
+          <h3 class="system-detail-heading">System 3: Ostrom Commons</h3>
+          <p class="system-detail-lede">
+            This section will focus on leverage points in shared-resource systems, inspired by
+            Elinor Ostrom’s work. (Content coming soon.)
+          </p>
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- EDGE NETWORK ANIMATION LOGIC -->
   <script src="edge-network.js"></script>
+  <!-- SYSTEMS SECTION LOGIC -->
+  <script src="feedback-systems.js"></script>
 
   <!-- hero scroll + title fade logic -->
   <script>
