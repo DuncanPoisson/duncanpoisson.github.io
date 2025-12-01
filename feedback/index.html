@@ -23,9 +23,43 @@
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
         "Segoe UI", sans-serif;
       line-height: 1.6;
+      min-height: 100vh;
     }
 
+    /* EDGE FRAME: fixed video stripes on left/right */
+
+    .edge-frame {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      justify-content: space-between;
+      pointer-events: none; /* let clicks go through */
+      z-index: 0;
+    }
+
+    .edge-strip {
+      width: 16.666vw;        /* ~1/6 of viewport width */
+      max-width: 260px;       /* cap on huge screens */
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .edge-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.9;           /* adjust brightness as you like */
+      filter: drop-shadow(0 0 12px rgba(15, 23, 42, 0.9));
+    }
+
+    /* MAIN CONTENT */
+
     main {
+      position: relative;
+      z-index: 1;             /* above edge videos */
       max-width: var(--max-width);
       margin: 0 auto;
       padding: 0 1.5rem 6rem;
@@ -39,18 +73,6 @@
       flex-direction: column;
       justify-content: center;
       padding: 4rem 0;
-      position: relative;      /* so canvas can sit inside */
-      overflow: hidden;        /* hide nodes that go out of bounds */
-    }
-
-    /* Network canvas behind the text */
-    .hero-network {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      opacity: 0.45;           /* how bright the network is overall */
     }
 
     .hero-title {
@@ -65,8 +87,6 @@
       transform-origin: center center;
       transition: opacity 0.7s ease-out, transform 0.7s ease-out;
       will-change: transform;
-      position: relative;
-      z-index: 1; /* above the canvas */
     }
 
     .hero-title.visible {
@@ -84,8 +104,6 @@
       opacity: 0;
       transform: translateY(16px);
       transition: opacity 0.4s ease, transform 0.4s ease;
-      position: relative;
-      z-index: 1; /* above the canvas */
     }
 
     .hero-quote.visible {
@@ -236,6 +254,14 @@
     /* Mobile stacking */
 
     @media (max-width: 768px) {
+      .edge-strip {
+        width: 0; /* effectively hides the side videos on narrow screens if needed */
+      }
+
+      main {
+        padding: 0 1.25rem 4rem;
+      }
+
       .core-idea-row {
         grid-template-columns: 1fr;
       }
@@ -247,19 +273,27 @@
   </style>
 </head>
 <body>
+  <!-- FIXED EDGE ANIMATION FRAME -->
+  <div class="edge-frame">
+    <div class="edge-strip edge-strip-left">
+      <video class="edge-video" autoplay muted playsinline>
+        <source src="edge_network.mp4" type="video/mp4" />
+      </video>
+    </div>
+    <div class="edge-strip edge-strip-right">
+      <video class="edge-video" autoplay muted playsinline>
+        <source src="edge_network.mp4" type="video/mp4" />
+      </video>
+    </div>
+  </div>
+
   <main>
     <!-- HERO -->
     <section class="hero" id="hero">
-      <!-- network canvas -->
-      <canvas class="hero-network" id="heroNetwork"></canvas>
-
       <h1 class="hero-title" id="heroTitle">Feedback</h1>
       <p class="hero-quote" id="heroQuote">
-        "Systems of information feedback control are fundamental to all 
-        life and human endeavor, from the slow pace of biological evolution 
-        to the launching of the latest space satellite... Everything we do 
-        as individuals, as an industry, or as a society is done in the 
-        context of an information-feedback system." — Jay W. Forrester
+        “Understanding feedback is understanding how small actions become
+        big consequences.”
       </p>
     </section>
 
@@ -270,16 +304,14 @@
       </h2>
       <div class="intro-body">
         <p>
-          Every system that changes over time - from your morning coffee cooling 
-          down to global economies rising and falling - is fundamentally shaped by 
-          feedback. But feedback isn't just about responses; it's about how those 
-          responses circle back to influence what happens next, creating loops of 
-          cause and effect that define how our world behaves.
+          This is where your introduction copy goes – a short, intuitive
+          explanation of what feedback is and why it matters for changing
+          systems.
         </p>
         <p>
-          To truly understand feedback, we need to recognize five fundamental patterns 
-          that appear again and again. As you continue scrolling, this section will 
-          eventually lead into the five core ideas of feedback
+          As you continue scrolling, this section will eventually lead into the
+          five core ideas of feedback: negative feedback, positive feedback,
+          oscillations and delays, connectivity, and leverage points.
         </p>
 
         <!-- CORE IDEAS BLOCK -->
@@ -296,11 +328,9 @@
                 <div class="core-idea-pill" tabindex="0" role="button">
                   <span class="core-idea-label">Negative Feedback</span>
                   <div class="core-idea-detail">
-                    acts like an invisible hand that pulls systems toward stability. Think of 
-                    how your body maintains its temperature — too hot, and you sweat to cool 
-                    down; too cold, and you shiver to warm up. These balancing loops don't 
-                    amplify change; they resist it, always tugging things back toward some target.
-
+                    Negative feedback pushes a system back toward a target when it
+                    drifts. Think of a thermostat turning the heat on and off to
+                    keep a room near a set temperature.
                   </div>
                 </div>
               </div>
@@ -322,10 +352,9 @@
                 <div class="core-idea-pill" tabindex="0" role="button">
                   <span class="core-idea-label">Positive Feedback</span>
                   <div class="core-idea-detail">
-                    does the opposite - it changes by feeding on itself. A snowball rolling downhill 
-                    gathers more snow, becoming larger, gathering even more snow. These amplifying 
-                    loops take small changes and make them bigger, whether that's a viral video 
-                    spreading across social media or economic bubbles inflating before they burst.
+                    Positive feedback amplifies change. Growth feeds on itself:
+                    rumors that spread faster as more people talk, or debt that
+                    snowballs under compound interest.
                   </div>
                 </div>
               </div>
@@ -337,10 +366,9 @@
                 <div class="core-idea-pill" tabindex="0" role="button">
                   <span class="core-idea-label">Oscillations &amp; Delays</span>
                   <div class="core-idea-detail">
-                    emerge because feedback isn't instantaneous. When you adjust a shower's temperature, 
-                    there's a moment before you feel the change - and in that gap, you might overcorrect. 
-                    These time lags transform simple feedback into waves and cycles, from predator-prey 
-                    population swings to boom-bust economic patterns.
+                    When feedback arrives late, systems overcorrect. They overshoot,
+                    then swing back, creating cycles – like traffic waves, business
+                    booms and busts, or overshooting a shower temperature.
                   </div>
                 </div>
               </div>
@@ -362,11 +390,9 @@
                 <div class="core-idea-pill" tabindex="0" role="button">
                   <span class="core-idea-label">Connectivity</span>
                   <div class="core-idea-detail">
-                    determines how feedback ripples through a system. A single delayed flight at a major 
-                    hub can cascade through an airline's entire network. The more connected a system, the 
-                    faster and farther feedback effects can travel, turning local changes into system-wide 
-                    transformations.
-
+                    Connectivity is how tightly the parts of a system are linked.
+                    More connections can spread help or harm quickly – enabling
+                    resilience, but also making cascading failures more likely.
                   </div>
                 </div>
               </div>
@@ -378,10 +404,9 @@
                 <div class="core-idea-pill" tabindex="0" role="button">
                   <span class="core-idea-label">Leverage Points</span>
                   <div class="core-idea-detail">
-                    are where you can actually reshape these feedback patterns. Some changes just 
-                    push on a system, but others alter the very structure of its loops - like how 
-                    changing interest rates doesn't just affect one loan, but transforms the entire 
-                    feedback dynamic between borrowing, spending, and economic growth.
+                    Leverage points are places where a small change shifts overall
+                    behavior – changing the rules, goals, or information flows of a
+                    system rather than just turning a knob a little harder.
                   </div>
                 </div>
               </div>
@@ -397,9 +422,6 @@
       </div>
     </section>
   </main>
-
-  <!-- network animation logic -->
-  <script src="hero-network.js"></script>
 
   <!-- hero scroll + title fade logic -->
   <script>
