@@ -26,40 +26,20 @@
       min-height: 100vh;
     }
 
-    /* EDGE FRAME: fixed video stripes on left/right */
+    /* FULLSCREEN EDGE NETWORK CANVAS */
 
-    .edge-frame {
+    .edge-network {
       position: fixed;
       inset: 0;
-      display: flex;
-      justify-content: space-between;
-      pointer-events: none; /* let clicks go through */
+      pointer-events: none;  /* let user interact with content */
       z-index: 0;
-    }
-
-    .edge-strip {
-      width: 16.666vw;        /* ~1/6 of viewport width */
-      max-width: 260px;       /* cap on huge screens */
-      height: 100vh;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .edge-video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0.9;           /* adjust brightness as you like */
-      filter: drop-shadow(0 0 12px rgba(15, 23, 42, 0.9));
     }
 
     /* MAIN CONTENT */
 
     main {
       position: relative;
-      z-index: 1;             /* above edge videos */
+      z-index: 1;             /* above canvas */
       max-width: var(--max-width);
       margin: 0 auto;
       padding: 0 1.5rem 6rem;
@@ -254,10 +234,6 @@
     /* Mobile stacking */
 
     @media (max-width: 768px) {
-      .edge-strip {
-        width: 0; /* effectively hides the side videos on narrow screens if needed */
-      }
-
       main {
         padding: 0 1.25rem 4rem;
       }
@@ -273,19 +249,8 @@
   </style>
 </head>
 <body>
-  <!-- FIXED EDGE ANIMATION FRAME -->
-  <div class="edge-frame">
-    <div class="edge-strip edge-strip-left">
-      <video class="edge-video" autoplay muted playsinline>
-        <source src="edge_network.mp4" type="video/mp4" />
-      </video>
-    </div>
-    <div class="edge-strip edge-strip-right">
-      <video class="edge-video" autoplay muted playsinline>
-        <source src="edge_network.mp4" type="video/mp4" />
-      </video>
-    </div>
-  </div>
+  <!-- EDGE NETWORK ANIMATION BACKGROUND -->
+  <canvas id="edgeNetwork" class="edge-network"></canvas>
 
   <main>
     <!-- HERO -->
@@ -422,6 +387,9 @@
       </div>
     </section>
   </main>
+
+  <!-- EDGE NETWORK ANIMATION LOGIC -->
+  <script src="edge-network.js"></script>
 
   <!-- hero scroll + title fade logic -->
   <script>
