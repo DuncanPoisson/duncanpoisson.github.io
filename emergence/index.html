@@ -3,625 +3,398 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Glossary • Emergence (Mockup)</title>
-  <meta name="description" content="Mockup glossary term page scaffold for Complexity Explorer." />
+  <title>Emergence • Glossary • Complexity Explorer</title>
 
   <style>
     :root{
-      /* Quick-tweak palette */
-      --bg: #ffffff;
-      --surface: #ffffff;
-      --surface-2: #f6f7f9;
-      --border: #e5e7eb;
-      --text: #111827;
-      --muted: #6b7280;
+      --bg:#ffffff;
+      --text:#1f2937;
+      --muted:#6b7280;
+      --border:#e5e7eb;
 
-      /* Accent (tune these to match CE more closely) */
-      --brand: #0b6b77;         /* primary */
-      --brand-2: #0ea5b7;       /* hover/secondary */
-      --brand-ink: #083b42;
+      /* CE-ish teal accent (approx) */
+      --brand:#1f7a8c;
+      --brand-dark:#155a66;
 
-      --chip-bg: #eef7f8;
-      --focus: rgba(14,165,183,.35);
-
-      --shadow: 0 8px 24px rgba(17,24,39,.08);
-      --radius: 14px;
-      --radius-sm: 10px;
-      --max: 1100px;
+      --max: 1120px;
+      --pad: 18px;
     }
 
     *{ box-sizing:border-box; }
-    html,body{ height:100%; }
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
       color:var(--text);
       background:var(--bg);
       line-height:1.45;
     }
-
-    a{ color:var(--brand); text-decoration:none; }
+    a{ color:inherit; text-decoration:none; }
     a:hover{ text-decoration:underline; }
-    :focus-visible{
-      outline: 3px solid var(--focus);
-      outline-offset: 2px;
-      border-radius: 8px;
-    }
 
-    /* Top nav */
+    /* ===== Top bar ===== */
     .topbar{
-      position:sticky; top:0; z-index:10;
-      background: rgba(255,255,255,.9);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--border);
+      position:sticky;
+      top:0;
+      z-index:50;
+      background:#fff;
+      border-bottom:1px solid var(--border);
     }
     .topbar-inner{
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 12px 18px;
+      max-width:var(--max);
+      margin:0 auto;
+      padding:12px var(--pad);
       display:flex;
       align-items:center;
-      gap:16px;
       justify-content:space-between;
+      gap:16px;
     }
-    .brand{
-      display:flex; align-items:center; gap:10px;
-      font-weight:800;
+    .logo{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:700;
       letter-spacing:.2px;
-      color:var(--brand-ink);
+      white-space:nowrap;
     }
-    .brand-badge{
-      width:34px; height:34px; border-radius:10px;
-      background: linear-gradient(135deg, var(--brand), var(--brand-2));
-      box-shadow: 0 6px 18px rgba(14,165,183,.25);
-    }
-    .nav{
-      display:flex; align-items:center; gap:14px;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
-    .nav a{
-      font-size: 14px;
-      color: var(--muted);
-      padding: 6px 8px;
-      border-radius: 10px;
-    }
-    .nav a:hover{
-      color: var(--text);
-      background: var(--surface-2);
-      text-decoration:none;
+    .logo-mark{
+      width:28px;height:28px;
+      border-radius:6px;
+      background:var(--brand);
     }
 
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      font-weight: 650;
-      font-size: 14px;
-      color: var(--brand-ink);
-      box-shadow: none;
-      cursor:pointer;
-      user-select:none;
-    }
-    .pill.primary{
-      border-color: transparent;
-      background: var(--brand);
-      color: white;
-    }
-    .pill.primary:hover{ background: var(--brand-2); }
-    .pill:hover{ background: var(--surface-2); }
-
-    /* Page shell */
-    .wrap{
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 22px 18px 60px;
-    }
-    .crumbs{
-      font-size: 13px;
-      color: var(--muted);
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      align-items:center;
-      margin-bottom: 14px;
-    }
-    .crumbs .sep{ color: #c0c6cf; }
-
-    .hero{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:16px;
-      margin-bottom: 18px;
-    }
-    h1{
-      margin:0;
-      font-size: clamp(28px, 3vw, 38px);
-      letter-spacing:-.4px;
-    }
-    .subtitle{
-      margin-top: 6px;
-      color: var(--muted);
-      max-width: 70ch;
-    }
-
-    .grid{
-      display:grid;
-      grid-template-columns: 1.55fr .85fr;
-      gap: 18px;
-      align-items:start;
-    }
-    @media (max-width: 920px){
-      .grid{ grid-template-columns: 1fr; }
-      .hero{ flex-direction:column; }
-      .nav{ justify-content:flex-start; }
-    }
-
-    .card{
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-    .card.pad{ padding: 18px; }
-    .card-head{
-      padding: 16px 18px;
-      border-bottom: 1px solid var(--border);
+    .topnav{
       display:flex;
       align-items:center;
-      justify-content:space-between;
-      gap: 12px;
-    }
-    .card-title{
-      font-weight: 800;
-      letter-spacing: -.2px;
-    }
-
-    .kv{
-      display:grid;
-      grid-template-columns: 120px 1fr;
-      gap: 10px 14px;
-      padding: 16px 18px 18px;
-    }
-    .k{ color: var(--muted); font-size: 13px; padding-top:2px; }
-    .v{ font-size: 14px; }
-
-    .chips{ display:flex; flex-wrap:wrap; gap:8px; }
-    .chip{
-      display:inline-flex;
-      align-items:center;
-      padding: 6px 10px;
-      border-radius: 999px;
-      font-size: 13px;
-      background: var(--chip-bg);
-      border: 1px solid rgba(14,165,183,.18);
-      color: var(--brand-ink);
-      font-weight: 650;
-    }
-    .badge{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      font-size: 13px;
-      font-weight: 750;
-      color: var(--brand-ink);
-      background: rgba(11,107,119,.08);
-      border: 1px solid rgba(11,107,119,.18);
-      padding: 6px 10px;
-      border-radius: 999px;
-    }
-
-    .imgph{
-      width:100%;
-      aspect-ratio: 16 / 9;
-      border-radius: 12px;
-      background: linear-gradient(135deg, rgba(11,107,119,.16), rgba(14,165,183,.12));
-      border: 1px dashed rgba(11,107,119,.25);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      color: var(--brand-ink);
-      font-weight: 750;
-    }
-    .imgph small{ display:block; font-weight: 600; color: var(--muted); }
-
-    /* Section scaffold (accordion) */
-    details.acc{
-      border-top: 1px solid var(--border);
-      padding: 0;
-    }
-    details.acc:first-of-type{ border-top: none; }
-    summary.acc-sum{
-      list-style:none;
-      cursor:pointer;
-      padding: 14px 18px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 10px;
-      font-weight: 800;
-    }
-    summary.acc-sum::-webkit-details-marker{ display:none; }
-    .acc-meta{
-      font-weight: 650;
-      color: var(--muted);
-      font-size: 13px;
-    }
-    .acc-body{
-      padding: 0 18px 18px;
-      color: var(--text);
-    }
-    .acc-body p{ margin: 0 0 10px; }
-    .acc-body ul{ margin: 8px 0 0 18px; }
-    .acc-body li{ margin: 6px 0; }
-    .callout{
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-left: 4px solid var(--brand);
-      border-radius: 12px;
-      padding: 12px 12px 12px 14px;
-      margin: 12px 0 0;
-      color: var(--brand-ink);
-    }
-    .callout strong{ color: var(--text); }
-
-    /* Footer promo blocks (lightweight mimic) */
-    .promos{
-      margin-top: 18px;
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
-    @media (max-width: 920px){
-      .promos{ grid-template-columns: 1fr; }
-    }
-    .promo{
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
-      background: var(--surface);
-      padding: 14px 14px 16px;
-      box-shadow: none;
-    }
-    .promo h3{
-      margin:0 0 6px;
-      font-size: 16px;
-      letter-spacing:-.2px;
-    }
-    .promo p{ margin:0; color: var(--muted); font-size: 14px; }
-
-    /* Bottom nav buttons */
-    .bottom-nav{
-      display:flex;
-      gap: 10px;
-      flex-wrap:wrap;
-      align-items:center;
-      justify-content:space-between;
-      margin-top: 14px;
-    }
-    .bottom-nav .left, .bottom-nav .right{
-      display:flex;
       gap:10px;
       flex-wrap:wrap;
+      justify-content:flex-end;
+      font-size:14px;
+      color:var(--brand-dark);
+    }
+    .topnav a{
+      padding:6px 4px;
+    }
+    .sep{
+      color:#c7cdd6;
+      user-select:none;
+    }
+    .search-btn{
+      display:inline-flex;
       align-items:center;
+      gap:6px;
+      padding:6px 8px;
+      border:1px solid var(--border);
+      border-radius:4px;
+      color:var(--brand-dark);
+      background:#fff;
+      cursor:pointer;
+      font: inherit;
+    }
+    .search-btn:hover{ background:#f9fafb; text-decoration:none; }
+
+    /* ===== Banner ===== */
+    .banner{
+      background:
+        linear-gradient(to bottom, rgba(0,0,0,.28), rgba(0,0,0,.28)),
+        url("https://www.complexityexplorer.org/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MTE4MCwicHVyIjoiYmxvYl9pZCJ9fQ%3D%3D--e8e76fad62d601aa45ef6004627b4879f5d6cf03/eyJfcmFpbHMiOnsiZGF0YSI6eyJmb3JtYXQiOiJqcGciLCJyZXNpemVfdG9fbGltaXQiOlsxNDQwLG51bGxdfSwicHVyIjoidmFyaWF0aW9uIn19--77802f8d320bb5e0d83ee6181ce3262ca68dd0c5/nasa-Q1p7bh3SHj8-unsplash.jpg");
+      background-size:cover;
+      background-position:center;
+      color:#fff;
+    }
+    .banner-inner{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:30px var(--pad);
+    }
+    .banner-title{
+      font-size:34px;
+      font-weight:800;
+      letter-spacing:.2px;
+      margin:0;
     }
 
-    /* Small helper */
-    .sr-only{
-      position:absolute;
-      width:1px;height:1px;
-      padding:0;margin:-1px;
-      overflow:hidden;clip:rect(0,0,0,0);
+    /* ===== Main layout ===== */
+    .wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:22px var(--pad) 40px;
+    }
+    .layout{
+      display:grid;
+      grid-template-columns: 240px 1fr;
+      gap:26px;
+      align-items:start;
+    }
+
+    /* Left “Explore” sidebar */
+    .sidebar h2{
+      margin:0 0 10px;
+      font-size:22px;
+      font-weight:800;
+    }
+    .sidebar ul{
+      list-style:none;
+      margin:0;
+      padding:0;
+      border-top:1px solid var(--border);
+    }
+    .sidebar li{
+      border-bottom:1px solid var(--border);
+    }
+    .sidebar a{
+      display:block;
+      padding:10px 0;
+      color:var(--brand-dark);
+      font-weight:600;
+    }
+
+    /* Content area */
+    .content h3{
+      margin:0 0 6px;
+      font-size:16px;
+      font-weight:800;
+      color:var(--muted);
+      text-transform:none;
+    }
+
+    .word-label{
+      margin-top:2px;
+      font-size:14px;
+      font-weight:700;
+      color:var(--muted);
+    }
+    .term{
+      margin:6px 0 18px;
+      font-size:34px;
+      font-weight:900;
+    }
+
+    .rule{
       border:0;
+      border-top:1px solid var(--border);
+      margin:18px 0;
+    }
+
+    .term-grid{
+      display:grid;
+      grid-template-columns: 1.6fr .9fr;
+      gap:26px;
+      align-items:start;
+    }
+
+    .label{
+      font-size:14px;
+      font-weight:800;
+      margin:0 0 8px;
+    }
+
+    .entry-image{
+      width:100%;
+      height:auto;
+      display:block;
+      border-radius:2px;
+      border:0;
+    }
+
+    .desc{
+      margin-top:8px;
+      font-size:16px;
+    }
+
+    .meta{
+      border-top:1px solid var(--border);
+      padding-top:12px;
+    }
+    .meta-row{
+      margin:10px 0;
+    }
+    .meta-key{
+      font-weight:800;
+      margin-bottom:6px;
+    }
+    .meta-val{
+      color:var(--text);
+    }
+
+    .links{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-top:10px;
+      color:var(--brand-dark);
+      font-weight:700;
+    }
+    .prevnext{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      align-items:center;
+      color:var(--brand-dark);
+      font-weight:700;
+    }
+
+    /* ===== Footer panels ===== */
+    .footer-panels{
+      border-top:1px solid var(--border);
+      margin-top:22px;
+      padding-top:22px;
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:18px;
+    }
+    .panel h4{
+      margin:0 0 6px;
+      font-size:18px;
+      font-weight:900;
+    }
+    .panel a{
+      color:var(--brand-dark);
+      font-weight:600;
+    }
+    .copyright{
+      margin-top:18px;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .layout{ grid-template-columns: 1fr; }
+      .term-grid{ grid-template-columns: 1fr; }
+      .topbar-inner{ align-items:flex-start; }
+      .footer-panels{ grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 560px){
+      .footer-panels{ grid-template-columns: 1fr; }
+      .banner-title{ font-size:28px; }
+      .term{ font-size:30px; }
     }
   </style>
 </head>
 
 <body>
-  <!-- Top navigation (mock) -->
+  <!-- Top bar -->
   <header class="topbar" role="banner">
     <div class="topbar-inner">
-      <div class="brand" aria-label="Site brand">
-        <span class="brand-badge" aria-hidden="true"></span>
-        <span>Complexity Explorer <span style="opacity:.6;font-weight:700;">• Mock</span></span>
-      </div>
+      <a class="logo" href="#" aria-label="Complexity Explorer">
+        <span class="logo-mark" aria-hidden="true"></span>
+        <span>Complexity Explorer Santa Fe Institute</span>
+      </a>
 
-      <nav class="nav" aria-label="Primary">
-        <a href="#" title="Mock link">Home</a>
-        <a href="#" title="Mock link">News</a>
-        <a href="#" title="Mock link">Courses</a>
-        <a href="#" title="Mock link"><strong style="color:var(--text);">Explore</strong></a>
-        <a href="#" title="Mock link">About</a>
-        <a href="#" title="Mock link">Support</a>
-        <span style="width:1px;height:22px;background:var(--border);display:inline-block;"></span>
-        <a href="#" title="Mock link">Login</a>
-        <a href="#" title="Mock link">Register</a>
-        <button class="pill primary" type="button" title="Mock button">Donate</button>
+      <nav class="topnav" aria-label="Top navigation">
+        <a href="#">home</a><span class="sep">|</span>
+        <a href="#">news</a><span class="sep">|</span>
+        <a href="#">courses</a><span class="sep">|</span>
+        <a href="#"><strong>explore</strong></a><span class="sep">|</span>
+        <a href="#">about</a><span class="sep">|</span>
+        <a href="#">support</a><span class="sep">|</span>
+
+        <button class="search-btn" type="button" aria-label="Search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="2"/>
+            <path d="M16.2 16.2 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          search
+        </button>
       </nav>
     </div>
   </header>
 
+  <!-- Banner -->
+  <section class="banner" aria-label="Explore banner">
+    <div class="banner-inner">
+      <h1 class="banner-title">Explore</h1>
+    </div>
+  </section>
+
+  <!-- Main -->
   <main class="wrap" role="main">
-    <!-- Breadcrumbs -->
-    <div class="crumbs" aria-label="Breadcrumb">
-      <span>Explore</span>
-      <span class="sep">›</span>
-      <a href="#" title="Mock link">Glossary</a>
-      <span class="sep">›</span>
-      <span aria-current="page">emergence</span>
-    </div>
+    <div class="layout">
+      <!-- Sidebar -->
+      <aside class="sidebar" aria-label="Explore sidebar">
+        <h2>Explore</h2>
+        <ul>
+          <li><a href="#">Explore</a></li>
+          <li><a href="#">Virtual Laboratory</a></li>
+          <li><a href="#"><strong>Glossary</strong></a></li>
+          <li><a href="#">Resources</a></li>
+        </ul>
+      </aside>
 
-    <!-- Page title -->
-    <div class="hero">
-      <div>
-        <div style="color:var(--muted);font-size:13px;font-weight:750;letter-spacing:.2px;text-transform:uppercase;">
-          Word
-        </div>
-        <h1>emergence</h1>
-        <p class="subtitle">
-          A process by which a system of interacting subunits acquires qualitatively new properties that cannot be understood
-          as the simple addition of their individual contributions.
-        </p>
-      </div>
+      <!-- Content -->
+      <section class="content" aria-label="Glossary entry">
+        <div class="word-label">Word</div>
+        <div class="term">emergence</div>
 
-      <div style="display:flex;gap:10px;flex-wrap:wrap;">
-        <a class="pill" href="#back" title="Mock back link">← Back to Glossary Library</a>
-        <a class="pill" href="#prev" title="Mock prev link">← Prev term</a>
-        <a class="pill" href="#next" title="Mock next link">Next term →</a>
-      </div>
-    </div>
+        <div class="term-grid">
+          <!-- Left: image + description -->
+          <div>
+            <div class="label">Image</div>
+            <img
+              class="entry-image"
+              src="https://www.complexityexplorer.org/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MjMwLCJwdXIiOiJibG9iX2lkIn19--ceb6ff8fe145ca0b5b31791eca9f01eed69183c4/eyJfcmFpbHMiOnsiZGF0YSI6eyJmb3JtYXQiOiJqcGciLCJyZXNpemVfdG9fbGltaXQiOlsxMTc2LG51bGxdfSwicHVyIjoidmFyaWF0aW9uIn19--6a4ae79d6f02c4daea4af6c2b1bc0fdec53301c1/Recurrence_relation.jpg"
+              alt="Glossary image for emergence"
+            />
 
-    <div class="grid">
-      <!-- Left column: main content scaffold -->
-      <section class="card" aria-label="Glossary content scaffold">
-        <div class="card-head">
-          <div class="card-title">Entry scaffold</div>
-          <div class="acc-meta">Mock sections (expand/collapse)</div>
-        </div>
+            <div class="label" style="margin-top:14px;">Description</div>
+            <div class="desc">
+              A process by which a system of interacting subunits acquires qualitatively new properties
+              that cannot be understood as the simple addition of their individual contributions.
+            </div>
 
-        <div class="kv" style="padding-bottom:8px;">
-          <div class="k">Image</div>
-          <div class="v">
-            <!-- Replace with a real image if you add one:
-                 <img src="./assets/emergence.jpg" alt="..." style="width:100%;border-radius:12px;border:1px solid var(--border);" />
-            -->
-            <div class="imgph">
-              <div style="text-align:center;">
-                Placeholder image block
-                <small>Drop an image in <code>emergence/assets/</code></small>
+            <hr class="rule" />
+
+            <div class="links">
+              <a href="#">← Back to Glossary Library</a>
+              <div class="prevnext">
+                <a href="#">← Prev term</a>
+                <a href="#">→ Next term</a>
               </div>
             </div>
           </div>
 
-          <div class="k">Description</div>
-          <div class="v">
-            <p style="margin:0;">
-              Use this area to keep the “one-sentence” definition consistent across the glossary, and let the sections below
-              carry the pedagogical weight.
-            </p>
+          <!-- Right: topics + difficulty -->
+          <div class="meta" aria-label="Entry metadata">
+            <div class="meta-row">
+              <div class="meta-key">Topics</div>
+              <div class="meta-val">Emergence, Complex Systems</div>
+            </div>
+
+            <div class="meta-row">
+              <div class="meta-key">Difficulty</div>
+              <div class="meta-val">1</div>
+            </div>
           </div>
         </div>
 
-        <!-- Accordion sections -->
-        <details class="acc" open>
-          <summary class="acc-sum">
-            <span>In plain language</span>
-            <span class="acc-meta">What a newcomer should walk away with</span>
-          </summary>
-          <div class="acc-body">
-            <p><strong>Emergence</strong> is when the whole does things the parts can’t do alone—because the parts are interacting.</p>
-            <div class="callout">
-              <strong>Editing note:</strong> Keep this section short. Aim for 3–5 sentences, no jargon, one concrete example.
-            </div>
+        <!-- Footer panels (as on page) -->
+        <div class="footer-panels" aria-label="Footer panels">
+          <div class="panel">
+            <h4><a href="#">Explore</a></h4>
+            <a href="#">Discover the world of complexity</a>
           </div>
-        </details>
+          <div class="panel">
+            <h4><a href="#">Give</a></h4>
+            <a href="#">You make Complexity Explorer possible</a>
+          </div>
+          <div class="panel">
+            <h4><a href="#">Register</a></h4>
+            <a href="#">Sign up to take full courses</a>
+          </div>
+          <div class="panel">
+            <h4><a href="#">Connect</a></h4>
+            <div style="color:var(--muted);font-weight:600;">Get in touch and follow us</div>
+          </div>
+        </div>
 
-        <details class="acc" open>
-          <summary class="acc-sum">
-            <span>Key idea</span>
-            <span class="acc-meta">The “why this matters” sentence</span>
-          </summary>
-          <div class="acc-body">
-            <p>
-              Many complex systems are best understood by studying <em>interactions</em> and <em>organization</em>,
-              not just components.
-            </p>
-          </div>
-        </details>
-
-        <details class="acc">
-          <summary class="acc-sum">
-            <span>Mechanisms</span>
-            <span class="acc-meta">Common pathways to emergence</span>
-          </summary>
-          <div class="acc-body">
-            <ul>
-              <li><strong>Feedback loops</strong> (reinforcing / balancing)</li>
-              <li><strong>Local rules</strong> + repeated interaction</li>
-              <li><strong>Nonlinearity</strong> (small changes → big effects)</li>
-              <li><strong>Adaptation / learning</strong> (agents change behavior)</li>
-              <li><strong>Network structure</strong> (who interacts with whom)</li>
-            </ul>
-          </div>
-        </details>
-
-        <details class="acc">
-          <summary class="acc-sum">
-            <span>Examples</span>
-            <span class="acc-meta">Real + toy examples</span>
-          </summary>
-          <div class="acc-body">
-            <ul>
-              <li><strong>Flocking:</strong> coordinated movement from local alignment rules</li>
-              <li><strong>Ant trails:</strong> path structure from pheromone reinforcement</li>
-              <li><strong>Markets:</strong> price patterns from many local decisions</li>
-              <li><strong>Cells → tissues:</strong> collective behavior from signaling</li>
-            </ul>
-          </div>
-        </details>
-
-        <details class="acc">
-          <summary class="acc-sum">
-            <span>Misconceptions</span>
-            <span class="acc-meta">What people often get wrong</span>
-          </summary>
-          <div class="acc-body">
-            <ul>
-              <li>“Emergence means magic.” (No—often it’s local rules + interaction.)</li>
-              <li>“Emergence is always good.” (It can be harmful or unstable.)</li>
-              <li>“If it’s complicated, it’s emergent.” (Complicated ≠ emergent.)</li>
-            </ul>
-          </div>
-        </details>
-
-        <details class="acc">
-          <summary class="acc-sum">
-            <span>Formalization</span>
-            <span class="acc-meta">If you want equations / measures</span>
-          </summary>
-          <div class="acc-body">
-            <p>
-              Put your preferred formal handles here (e.g., information-theoretic measures, order parameters,
-              macro-variables, multi-scale descriptions).
-            </p>
-            <div class="callout">
-              <strong>Suggestion:</strong> Keep math optional: summarize what it buys you (prediction? comparison? rigor?).
-            </div>
-          </div>
-        </details>
-
-        <details class="acc">
-          <summary class="acc-sum">
-            <span>Related terms</span>
-            <span class="acc-meta">Cross-links that keep readers moving</span>
-          </summary>
-          <div class="acc-body">
-            <div class="chips" aria-label="Related terms">
-              <a class="chip" href="#" title="Mock link">feedback</a>
-              <a class="chip" href="#" title="Mock link">self-organization</a>
-              <a class="chip" href="#" title="Mock link">nonlinearity</a>
-              <a class="chip" href="#" title="Mock link">adaptation</a>
-              <a class="chip" href="#" title="Mock link">complex systems</a>
-            </div>
-          </div>
-        </details>
-
-        <details class="acc">
-          <summary class="acc-sum">
-            <span>In courses / resources</span>
-            <span class="acc-meta">Where it shows up</span>
-          </summary>
-          <div class="acc-body">
-            <ul>
-              <li><a href="#" title="Mock link">Course: Intro to Complexity</a> — module on emergence</li>
-              <li><a href="#" title="Mock link">Video: Emergence explained</a></li>
-              <li><a href="#" title="Mock link">Virtual Lab: Agent-based model demo</a></li>
-            </ul>
-          </div>
-        </details>
-
-        <details class="acc">
-          <summary class="acc-sum">
-            <span>Further reading</span>
-            <span class="acc-meta">Books / papers / curated links</span>
-          </summary>
-          <div class="acc-body">
-            <ul>
-              <li><a href="#" title="Mock link">Reference 1</a> — one-line annotation</li>
-              <li><a href="#" title="Mock link">Reference 2</a> — one-line annotation</li>
-              <li><a href="#" title="Mock link">Reference 3</a> — one-line annotation</li>
-            </ul>
-          </div>
-        </details>
-
-        <div class="bottom-nav" style="padding:14px 18px 18px;">
-          <div class="left">
-            <a class="pill" id="back" href="#" title="Mock back link">← Back to Glossary Library</a>
-          </div>
-          <div class="right">
-            <a class="pill" id="prev" href="#" title="Mock prev link">← Prev term</a>
-            <a class="pill" id="next" href="#" title="Mock next link">Next term →</a>
-          </div>
+        <div class="copyright">
+          © <span id="y"></span> Santa Fe Institute. All rights reserved.
         </div>
       </section>
-
-      <!-- Right column: metadata / quick actions -->
-      <aside class="card" aria-label="Glossary metadata">
-        <div class="card-head">
-          <div class="card-title">Metadata</div>
-          <span class="badge" title="Mock difficulty badge">Difficulty: 1</span>
-        </div>
-
-        <div class="kv">
-          <div class="k">Topics</div>
-          <div class="v">
-            <div class="chips" aria-label="Topics">
-              <span class="chip">Emergence</span>
-              <span class="chip">Complex Systems</span>
-            </div>
-          </div>
-
-          <div class="k">Keywords</div>
-          <div class="v">
-            <div class="chips" aria-label="Keywords">
-              <span class="chip">macro</span>
-              <span class="chip">micro</span>
-              <span class="chip">interaction</span>
-              <span class="chip">pattern</span>
-            </div>
-          </div>
-
-          <div class="k">Glossary ID</div>
-          <div class="v"><code>mock-414</code></div>
-
-          <div class="k">Search</div>
-          <div class="v">
-            <label class="sr-only" for="search">Search glossary</label>
-            <input id="search" type="search" placeholder="Search glossary (mock)"
-              style="width:100%;padding:10px 12px;border-radius:12px;border:1px solid var(--border);font-size:14px;" />
-            <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;">
-              <button class="pill primary" type="button">Search</button>
-              <button class="pill" type="button">Clear</button>
-            </div>
-          </div>
-        </div>
-
-        <div style="padding: 0 18px 18px;">
-          <div class="callout" style="margin-top:0;">
-            <strong>Mockup purpose:</strong> this sidebar is where you can add “quick actions” people expect
-            (search, tags, difficulty, links to labs/courses).
-          </div>
-        </div>
-      </aside>
     </div>
-
-    <!-- Footer-like promo blocks -->
-    <section class="promos" aria-label="Footer promos (mock)">
-      <div class="promo">
-        <h3>Explore</h3>
-        <p>Discover the world of complexity.</p>
-      </div>
-      <div class="promo">
-        <h3>Give</h3>
-        <p>You make this possible.</p>
-      </div>
-      <div class="promo">
-        <h3>Register</h3>
-        <p>Sign up to take full courses.</p>
-      </div>
-    </section>
-
-    <footer style="margin-top:18px;color:var(--muted);font-size:13px;">
-      © <span id="y"></span> Santa Fe Institute • Mock page for demonstration
-    </footer>
   </main>
 
   <script>
-    // Tiny convenience: footer year
     document.getElementById("y").textContent = new Date().getFullYear();
   </script>
 </body>
