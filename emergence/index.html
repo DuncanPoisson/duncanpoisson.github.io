@@ -10,19 +10,17 @@
       --text: #111111;
       --muted: #4b5563;
 
-      /* Headings (your requested color) */
+      /* Headings */
       --h2: #6F516B;
-
-      /* Subheadings: darker purple */
       --h3: #4E2F4A;
 
       --max: 980px;
 
       /* Spacing controls */
-      --para-gap: 18px;     /* space between paragraphs */
-      --after-copy: 44px;   /* extra space after text blocks before next heading */
-      --h2-top: 44px;       /* space above H2 */
-      --h3-top: 24px;       /* space above H3 */
+      --para-gap: 16px;     /* space between paragraphs inside a block */
+      --after-copy: 44px;   /* space after a text block before the next heading */
+      --h2-top: 44px;
+      --h3-top: 24px;
     }
 
     *{ box-sizing:border-box; }
@@ -78,18 +76,20 @@
       text-align: center;
     }
 
-    /* Paragraphs left */
+    /* Paragraphs: full width of container (no max-width) */
     p{
       margin: 0 0 var(--para-gap);
       font-size: 16px;
       color: var(--text);
       text-align: left;
-      max-width: 78ch;
     }
 
-    /* A "copy" block adds extra breathing room before the next heading */
+    /* Copy blocks: manage "space before next heading" cleanly */
     .copy{
       margin-bottom: var(--after-copy);
+    }
+    .copy > p:last-child{
+      margin-bottom: 0; /* prevents weird extra space at end of multi-paragraph blocks */
     }
 
     /* Audio cards row */
@@ -100,7 +100,6 @@
       margin-top: 16px;
       margin-bottom: var(--after-copy);
     }
-
     @media (max-width: 900px){
       .audio-grid{ grid-template-columns: 1fr; }
     }
@@ -111,7 +110,6 @@
       background: #fbfafc;
       border: 1px solid #eee8f0;
     }
-
     .audio-card .card-title{
       font-weight: 900;
       color: var(--h3);
@@ -120,7 +118,6 @@
       text-align: left;
     }
 
-    /* Placeholder for audio player */
     .audio-placeholder{
       height: 44px;
       border-radius: 10px;
@@ -150,10 +147,8 @@
 
 <body>
   <main>
-    <!-- Title -->
     <h1>Emergence</h1>
 
-    <!-- Reference image -->
     <img
       class="hero-img"
       src="https://startalkmedia.com/wp-content/uploads/2025/07/Chaos_Theory_and_Double_Pendulum-1400x427.jpg"
@@ -161,24 +156,18 @@
       loading="lazy"
     />
 
-    <!-- Definition -->
     <h2>Definition</h2>
     <div class="copy">
-      <p>Emergence is the appearance of coherent system-level patterns, behaviors, or functions that arise from interactions among many components—often without any single component “containing” or directing the whole outcome.</p>
-<p>In the SFI/complexity-science framing, emergence is fundamentally scale-dependent: what matters is that a higher-level description can contain information or regularities that aren’t present (or aren’t usable) at the level of individual parts, typically via coarse-graining into effective variables/theories that compress micro-details while staying predictive. </p>
-<p>A central research goal is to identify the organizing mechanisms and constraints (e.g., feedbacks, networks, adaptation) that make those macroscopic regularities robust across different complex systems.</p>
+      <p>[put definition here]</p>
+      <!-- add more <p>...</p> freely; they will now span full width -->
     </div>
 
-    <!-- Example System -->
     <h3>Example System</h3>
     <div class="copy">
       <p>[insert example explanation here]</p>
     </div>
 
-    <!-- Across Disciplines -->
     <h2>Across Disciplines</h2>
-
-    <!-- 3 boxes of audio clips -->
     <div class="audio-grid" aria-label="Expert voices">
       <div class="audio-card">
         <div class="card-title">[Expert Voice 1]</div>
@@ -196,13 +185,11 @@
       </div>
     </div>
 
-    <!-- Semantic Drift -->
     <h3>Semantic Drift</h3>
     <div class="copy">
       <p>[insert how this term has changed over the years]</p>
     </div>
 
-    <!-- Interactive Components -->
     <h2>Interactive Components</h2>
     <div class="copy">
       <p>[insert quick model here]</p>
